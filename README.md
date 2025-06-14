@@ -47,10 +47,10 @@ Exceed is a feature-rich, browser-based collaborative platform designed to enabl
 |-------------|-----------------------------------------------|
 | Frontend    | HTML, CSS, JavaScript                         |
 | Realtime    | WebSocket (Socket.IO or native WebSockets)    |
-| Backend     | Node.js / Flask / Django *(Choose yours)*     |
-| Database    | Firebase / MongoDB / MySQL *(If implemented)* |
-| Auth        | Firebase Authentication / Custom Auth         |
-| Hosting     | GitHub Pages / Netlify / Render *(Optional)*  |
+| Backend     | Node.js                                       |
+| Database    | Firebase, MySQL                               |
+| Auth        | Custom Auth                                   |
+| Hosting     | GitHub Pages                                  |
 
 ---
 
