@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exceed - Real-Time Collaboration</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans&family=Roboto+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Auth Modal -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2>Welcome to Exceed</h2>
+                <p>Sign in to start collaborating in real-time</p>
+            </div>
+            <form class="auth-form" id="authForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required placeholder="Enter your username">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                </div>
+                <div class="auth-buttons">
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Collaborator Modal -->
+    <div class="add-collaborator-modal hidden" id="addCollaboratorModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Invite Collaborator</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <form class="invite-form" id="inviteForm">
+                <input type="email" class="invite-input" placeholder="Enter email address" id="inviteEmail" required>
+                <div class="auth-buttons">
+                    <button type="button" class="btn btn-secondary" id="cancelInvite">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Send Invite</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Profile Panel -->
+    <div class="profile-panel" id="profilePanel">
+        <div class="profile-header">
+            <h2>Profile</h2>
+            <button class="close-profile" id="closeProfile">&times;</button>
+        </div>
+        <div class="profile-content">
+            <div class="profile-info">
+                <div class="profile-avatar" id="profileAvatar">U</div>
+                <h3 class="profile-name" id="profileName">User</h3>
+                <p class="profile-email" id="profileEmail">user@example.com</p>
+            </div>
+            
+            <div class="profile-section">
+                <h3>Account Settings</h3>
+                <form class="settings-form" id="settingsForm">
+                    <div class="form-row">
+                        <label for="displayName">Display Name</label>
+                        <input type="text" id="displayName" placeholder="Enter your display name">
+                    </div>
+                    <div class="form-row">
+                        <label for="timezone">Timezone</label>
+                        <select id="timezone">
+                            <option value="UTC-12">UTC-12:00</option>
+                            <option value="UTC-8">UTC-08:00 (PST)</option>
+                            <option value="UTC-5">UTC-05:00 (EST)</option>
+                            <option value="UTC" selected>UTC</option>
+                            <option value="UTC+1">UTC+01:00 (CET)</option>
+                            <option value="UTC+5.5">UTC+05:30 (IST)</option>
+                            <option value="UTC+8">UTC+08:00 (CST)</option>
+                            <option value="UTC+9">UTC+09:00 (JST)</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="notificationPref">Notification Preferences</label>
+                        <select id="notificationPref">
+                            <option value="all">All notifications</option>
+                            <option value="mentions" selected>Only mentions</option>
+                            <option value="none">No notifications</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="profile-section">
+                <h3>Preferences</h3>
+                <div class="form-row">
+                    <label>
+                        <input type="checkbox" id="darkModeToggle" checked> Dark Mode
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="profile-footer">
+            <button class="btn btn-primary" id="saveSettings">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen hidden" id="loadingScreen">
+        <div class="loading-logo">EXCEED</div>
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Initializing collaboration workspace...</div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">Exceed</div>
+        <div class="header-center">
+            <input type="text" class="document-title" value="Untitled Document" id="docTitle">
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-secondary" id="shareBtn">📤 Share</button>
+            <button class="btn btn-primary" id="saveBtn">💾 Save</button>
+            <div class="user-menu">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <div class="user-dropdown" id="userDropdown">
+                    <div class="dropdown-item" id="profileItem">
+                        👤 Profile
+                    </div>
+                    <div class="dropdown-item" id="settingsItem">
+                        ⚙️ Settings
+                    </div>
+                    <div class="dropdown-item" id="logoutItem">
+                        🚪 Logout
+                    </div>
+                </div>
+            </div>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </div>
+    </header>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="notes">📝 Notes</button>
+            <button class="mode-btn" data-mode="code">💻 Code</button>
+            <button class="mode-btn" data-mode="table">📊 Table</button>
+        </div>
+        
+        <div class="toolbar-group">
+            <button class="tool-btn" title="Bold"><strong>B</strong></button>
+            <button class="tool-btn" title="Italic"><em>I</em></button>
+            <button class="tool-btn" title="Underline"><u>U</u></button>
+        </div>
+        
+        <div class="toolbar-group">
+            <button class="tool-btn" title="Undo">↶</button>
+            <button class="tool-btn" title="Redo">↷</button>
+        </div>
+        
+        <div class="toolbar-group">
+            <button class="tool-btn" title="Export PDF">📄</button>
+            <button class="tool-btn" title="Export MD">📝</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="collaborators">
+                <div class="collaborators-header">
+                    <h3>Collaborators (<span id="collaboratorCount">1</span>)</h3>
+                    <button class="add-collaborator-btn" id="addCollaboratorBtn">+ Add</button>
+                </div>
+                <div id="collaboratorsList">
+                    <!-- Collaborators will be dynamically added here -->
+                </div>
+            </div>
+            
+            <div class="version-history">
+                <h3>Version History</h3>
+                <div class="version-item">
+                    <div class="version-time">Just now</div>
+                    <div class="version-author">Document created</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Editor Container -->
+        <div class="editor-container">
+            <div class="editor-tabs">
+                <button class="editor-tab active" data-tab="document">Document</button>
+                <button class="editor-tab" data-tab="settings">Settings</button>
+            </div>
+            
+            <div class="editor">
+                <!-- Notes Mode -->
+                <textarea class="editor-content notes-mode" id="editor" placeholder="Start typing to collaborate in real-time..." style="display: block;">Welcome to Exceed - Authenticated Collaboration Platform!
+
+This is a collaborative document where authenticated users can:
+
+🔐 Secure login system
+👥 Invite collaborators manually
+💬 Chat with team members in real-time
+📚 Track version history
+🎨 Switch between themes
+📤 Export documents
+
+Only logged-in users can invite others and participate in the chat.
+
+Start typing and invite your team to collaborate!</textarea>
+                
+                <!-- Code Mode -->
+                <textarea class="editor-content" id="codeEditor" placeholder="// Start coding..." style="display: none;">// Welcome to Exceed Code Editor
+// Real-time collaborative coding environment
+
+function collaborate() {
+    console.log("Coding together in real-time!");
+    return "Amazing!";
+}
+
+collaborate();</textarea>
+                
+                <!-- Table Mode -->
+                <div class="spreadsheet-container" id="spreadsheetContainer" style="display: none;">
+                    <table class="spreadsheet" id="spreadsheet">
+                        <thead>
+                            <tr>
+                                <th class="column-header"></th>
+                                <th class="column-header">A</th>
+                                <th class="column-header">B</th>
+                                <th class="column-header">C</th>
+                                <th class="column-header">D</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="row-header">1</td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                            <tr>
+                                <td class="row-header">2</td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                            <tr>
+                                <td class="row-header">3</td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                            <tr>
+                                <td class="row-header">4</td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Panel -->
+        <aside class="chat-panel">
+            <div class="chat-header">
+                <h3>Team Chat</h3>
+                <button class="tool-btn">⚙️</button>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <!-- Chat messages will be dynamically added here -->
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" placeholder="Type a message..." id="chatInput">
+                <button id="sendMessage">Send</button>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-left">
+            <span>📊 <span id="collaboratorStatus">1 collaborator</span></span>
+            <span>💾 Auto-saved <span id="lastSaved">just now</span></span>
+        </div>
+        <div class="status-right">
+            <span>🌐 <span id="connectionStatus">Connecting...</span></span>
+            <span>Words: <span id="wordCount">0</span></span>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
