@@ -54,15 +54,7 @@ Exceed is a feature-rich, browser-based collaborative platform designed to enabl
 
 ---
 
-## Screenshots
 
-| Interface    | Preview         |
-|--------------|-----------------|
-| Login Page   | *[Insert image]* |
-| Work Area    | *[Insert image]* |
-| Code Space   | *[Insert image]* |
-| Spreadsheet  | *[Insert image]* |
-| Chat Box     | *[Insert image]* |
 
 ---
 
