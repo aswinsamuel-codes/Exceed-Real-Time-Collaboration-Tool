@@ -52,7 +52,6 @@ Exceed is a feature-rich, browser-based collaborative platform designed to enabl
 | Auth        | Custom Auth                                   |
 | Hosting     | GitHub Pages                                  |
 
----
 
 
 
