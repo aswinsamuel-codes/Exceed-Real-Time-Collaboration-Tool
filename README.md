@@ -46,7 +46,7 @@ Exceed is a feature-rich, browser-based collaborative platform designed to enabl
 | Layer       | Technologies Used                             |
 |-------------|-----------------------------------------------|
 | Frontend    | HTML, CSS, JavaScript                         |
-| Realtime    | WebSocket (Socket.IO or native WebSockets)    |
+| Realtime    | WebSocket                                     |
 | Backend     | Node.js                                       |
 | Database    | Firebase, MySQL                               |
 | Auth        | Custom Auth                                   |
