@@ -17,24 +17,24 @@ Exceed is a feature-rich, browser-based collaborative platform designed to enabl
 
 ##  Features
 
-### ✦ Real-Time Collaboration
+### Real-Time Collaboration
 - Live synchronization across users using WebSockets
 - Seamless interaction – every change reflects instantly across sessions
 
-### ✦ Multi-functional Work Environment
+### Multi-functional Work Environment
 - **Work Area**: Plain text note editor for jotting down ideas or plans
 - **Code Space**: Collaborative coding section with syntax highlighting
 - **Spreadsheet Panel**: Excel-like table for working with structured/tabular data
 
-### ✦ User Authentication
+### User Authentication
 - Secure login via **Username** or **Gmail**
 - Session-based user management
 
-### ✦ Chat Integration
+### Chat Integration
 - Live chat box for team communication
 - Enables discussion alongside collaboration
 
-### ✦ Clean UI & Minimal Design
+### Clean UI & Minimal Design
 - Intuitive layout
 - Responsive design
 - Focused on functionality and productivity
